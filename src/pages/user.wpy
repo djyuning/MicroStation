@@ -1,0 +1,158 @@
+<template>
+  <view class="container">
+
+    <!-- user start -->
+    <view class="user">
+
+      <view class="avatar">
+        <image src="" />
+      </view>
+
+      <view class="info">
+        <text class="username">username</text>
+        <text class="remark">username</text>
+      </view>
+
+    </view>
+    <!-- user end -->
+
+    <view class="menu">
+
+      <navigator class="item" url="/pages/tester">
+        <view class="info">
+          <text class="title">我的快递</text>
+        </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
+
+      <navigator class="item" url="/pages/tester">
+        <view class="info">
+          <text class="title">洗衣订单</text>
+        </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
+
+      <navigator class="item" url="/pages/tester">
+        <view class="info">
+          <text class="title">租车快递</text>
+        </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
+
+      <navigator class="item" url="/pages/tester">
+        <view class="info">
+          <text class="title">超市订单</text>
+        </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
+
+      <navigator class="item" url="/pages/tester">
+        <view class="info">
+          <text class="title">退货快递</text>
+        </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
+
+    </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class User extends wepy.page {
+  config = {
+    navigationBarTitleText: '个人中心'
+  }
+}
+</script>
+
+<style lang="less">
+
+// 信息
+.user {
+  background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  padding: 64rpx 40rpx;
+  position: relative;
+
+  // 头像
+  .avatar {
+    background-color: white;
+    border-radius: 50%;
+    height: 128rpx;
+    overflow: hidden;
+    width: 128rpx;
+
+    image {
+      height: 100%;
+      width: 100%;
+    }
+
+  }
+
+  // 用户信息
+  .info {
+    flex: 1;
+    margin-left: 32rpx;
+    position: relative;
+
+    text {
+      display: block;
+    }
+
+    .username {
+      color: white;
+      font-size: 36rpx;
+      font-weight: 500;
+      line-height: 64rpx;
+    }
+
+    .remark {
+      color: white;
+      font-size: 28rpx;
+      opacity: .8;
+      line-height: 64rpx;
+    }
+
+  }
+
+}
+
+// 菜单
+.menu {
+  background-color: #fff;
+  border-top: 1px #eee solid;
+  position: relative;
+
+  .item {
+    border-bottom: 1px #eee solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 16rpx;
+    position: relative;
+
+    .info {
+      flex: 1;
+      position: relative;
+
+      .title {
+        font-size: 32+rpx;
+        line-height: 64rpx;
+        padding: 0 16rpx;
+      }
+
+    }
+
+    .arrow {
+      height: 64rpx;
+      width: 64rpx;
+    }
+
+  }
+
+}
+</style>

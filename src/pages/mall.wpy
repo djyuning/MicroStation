@@ -1,0 +1,22 @@
+<template>
+  <view class="container">
+
+    <text>Mall</text>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Mall extends wepy.page {
+  config = {
+    navigationBarTitleText: '超市'
+  }
+
+}
+</script>
+
+<style lang="less">
+//
+</style>
