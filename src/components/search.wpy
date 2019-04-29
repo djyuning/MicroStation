@@ -1,0 +1,68 @@
+<template>
+  <view class="search">
+    <view class="inner">
+      <image src="/assets/icon-search.png" mode="aspectFit" />
+      <input type="search" placeholder="搜索商品" value="{{ value }}" bindconfirm="submit" />
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class SearchComponents extends wepy.component {
+
+  data = {
+    value: ''
+  }
+
+  methods = {
+
+    submit (e) {
+      let keyword = e.detail.value;
+      if (keyword !== '') {
+        keyword = keyword.replace(/\/|"|&|'|`|\$|<|>|;|[\x00-\x20]|[\x7F-\xFF]|[\u0100-\u2700]/g, '');
+        keyword = keyword.replace(/^\s|\s+|\s$/g, '');
+      }
+      this.value = keyword;
+      this.$emit('onSubmit', keyword);
+    },
+
+  }
+
+}
+</script>
+
+<style lang="less">
+.search {
+  background-color: white;
+  padding: 16rpx 32rpx 32rpx;
+  position: relative;
+
+  .inner {
+    align-items: center;
+    background-color: #f2f2f2;
+    border-radius: 8rpx;
+    display: flex;
+    padding-right: 8rpx;
+    position: relative;
+  }
+
+  image {
+    height: 48rpx;
+    margin: 8rpx;
+    width: 48rpx;
+  }
+
+  input {
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    font-size: 28rpx;
+    height: 64rpx;
+  }
+
+}
+</style>
+
+

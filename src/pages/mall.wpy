@@ -3,12 +3,21 @@
 
     <location></location>
 
+    <search @onSubmit.user="getProductsByKeyword"></search>
+
+    <products></products>
+
+    <shopCartBar></shopCartBar>
+
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
 import Location from '@/components/location';
+import Search from '@/components/search';
+import Products from '@/components/products';
+import ShopCartBar from '@/components/shopCartBar';
 
 export default class MallPage extends wepy.page {
   config = {
@@ -16,8 +25,30 @@ export default class MallPage extends wepy.page {
   }
 
   components = {
-    location: Location
+    location: Location,
+    search: Search,
+    products: Products,
+    shopCartBar: ShopCartBar,
   }
+
+  methods = {
+
+    // 根据关键字获取商品
+    getProductsByKeyword (keyword) {
+      if (!keyword) {
+        wx.showToast({
+           title: '请输入关键字',
+           icon: 'none',
+           duration: 2000
+        });
+        return;
+      }
+
+      console.log(keyword );
+    }
+
+  }
+
 }
 </script>
 

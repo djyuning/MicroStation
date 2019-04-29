@@ -1,0 +1,113 @@
+<template>
+  <view class="shop-cart-bar">
+
+    <view class="cart">
+      <image src="/assets/icon-shopcart.png" mode="aspectFit" />
+      <text class="badge">0</text>
+    </view>
+
+    <view class="info">
+      <text class="price">¥ 0.00</text>
+      <text class="price-delivery">另需配送费 ¥ 0.00</text>
+    </view>
+
+    <navigator class="settlement" url="/pages/settlement">去结算</navigator>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCartBarComponents extends wepy.component {
+
+  methods = {}
+
+}
+</script>
+
+<style lang="less">
+.shop-cart-bar {
+  background-color: #495058;
+  justify-content: space-between;
+  height: 96rpx;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  // 购物车图标
+  .cart {
+    background-color: #495058;
+    border-radius: 50%;
+    bottom: 0;
+    height: 100rpx;
+    left: 24rpx;
+    padding: 16rpx;
+    position: absolute;
+    width: 100rpx;
+
+    image {
+      background-color: #1ea6f0;
+      background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+      border-radius: 50%;
+      height: 100%;
+      width: 100%;
+    }
+
+    .badge {
+      background-color: #ff0000;
+      border-radius: 20rpx;
+      color: white;
+      font-size: 20rpx;
+      font-weight: 600;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0 11rpx;
+    }
+
+  }
+
+  .info {
+    color: white;
+    margin-left: 180rpx;
+    margin-right: 220rpx;
+
+    text {
+      display: block;
+    }
+
+    .price {
+      font-size: 32rpx;
+      font-weight: 500;
+      left: 48rpx;
+      margin-top: 6rpx;
+    }
+
+    .price-delivery {
+      font-size: 20rpx;
+      left: 36rpx;
+    }
+
+  }
+
+  .settlement {
+    background-color: #1ea6f0;
+    background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+    color: white;
+    display: block;
+    font-size: 32rpx;
+    line-height: 96rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    white-space: nowrap;
+    width: 200rpx;
+  }
+
+}
+</style>
+
+

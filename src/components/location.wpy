@@ -1,5 +1,5 @@
 <template>
-  <view class="location">
+  <view class="location" bindtap="chooseLocation">
 
     <view class="base">
       <text class="name">{{ name }}</text>
@@ -24,27 +24,34 @@ const qqmapsdk = new QQMapWX({
 });
 
 export default class LocationComponent extends wepy.component {
-  props= {
-    // 传入的纬度
-    latitude: {
-      type: Number,
-      default: null,
-    },
-
-    // 传入的经度
-    longitude: {
-      type: Number,
-      default: null,
-    },
-  }
-
   data = {
-    latitudeUse: null, // 使用的纬度
-    longitudeUse: null, // 使用的经度
-    loaction: null, // 完整的地理位置信息，由腾讯地图返回
+    latitude: null, // 使用的纬度
+    longitude: null, // 使用的经度
     name: '',
     address: '',
     distance: 0
+  }
+
+  methods = {
+
+    // 地图选址
+    chooseLocation () {
+      let self = this;
+
+      wx.chooseLocation({
+        success (res) {
+          console.log(res);
+          self.name = res.name;
+          self.address = res.address;
+          self.latitudeUse = res.latitude;
+          self.longitudeUse = res.longitude;
+          self.$apply();
+        },
+        fail () {},
+        complete () {}
+      });
+    }
+
   }
 
   // 获取详细地理位置信息
@@ -54,16 +61,11 @@ export default class LocationComponent extends wepy.component {
       qqmapsdk.reverseGeocoder({
         location: `${latitude},${longitude}`,
         success (res) {
-          console.log(res);
-
           // 错误
           if (res.status !== 0) {
             reject(res.message);
             return;
           }
-
-          // 正确
-          self.loaction = res.result;
           resolve(res.result);
         },
         fail (err) {
@@ -79,7 +81,7 @@ export default class LocationComponent extends wepy.component {
 
     wx.getLocation({
       type: 'wgs84', // // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-      altitude: 1,
+      accuracy: 1,
       success (res) {
         // 保持经纬度信息
         self.latitudeUse = res.latitude;
@@ -88,11 +90,9 @@ export default class LocationComponent extends wepy.component {
         // 获取详细信息
         self.getDetail(res.latitude, res.longitude)
         .then((loaction) => {
-
           self.name = loaction.address_reference.business_area.title;
           self.address = loaction.address;
           self.$apply();
-
         });
 
       },
@@ -116,6 +116,7 @@ export default class LocationComponent extends wepy.component {
   display: flex;
   justify-content: space-between;
   position: relative;
+  min-height: 132rpx;
 
   .base, .distance {
     overflow: hidden;
@@ -138,6 +139,7 @@ export default class LocationComponent extends wepy.component {
 
     .name {
       font-size: 32rpx;
+      font-weight: bold;
       line-height: 48rpx;
     }
 
@@ -154,6 +156,7 @@ export default class LocationComponent extends wepy.component {
     align-items: center;
     display: flex;
     max-width: 50%;
+    opacity: 0;
     padding: 0 32rpx 0 16rpx;
 
     text {

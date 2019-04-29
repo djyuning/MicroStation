@@ -216,7 +216,7 @@ export default class UserPage extends wepy.page {
     .username {
       color: white;
       font-size: 36rpx;
-      font-weight: 500;
+      font-weight: bold;
       line-height: 64rpx;
     }
 

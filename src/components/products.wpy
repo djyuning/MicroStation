@@ -1,0 +1,222 @@
+<template>
+  <view class="products">
+
+    <view class="sub sidebar">
+      <view class="categories">
+        <block wx:for="{{ categories }}" wx:key="index">
+          <view :class="{ item: 1, current: index === categoryCurrent }"
+          data-index="{{ index }}"
+          bindtap="setCurrent">
+            <text>{{ item.title }}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <view class="sub main">
+
+      <view class="header">
+
+asdasd
+
+      </view>
+
+      <view class="body">
+
+        <text>{{ categoryCurrent }}</text>
+
+        <block wx:for="{{ categories }}" wx:key="index">
+          <view :class="{ item: 1, current: index === categoryCurrent }"
+          data-index="{{ index }}"
+          bindtap="setCurrent">
+            <text>{{ item.title }}</text>
+          </view>
+        </block>
+
+      </view>
+
+    </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ProductsComponents extends wepy.component {
+
+  data = {
+    categories: [
+      {
+        title: '酒水饮料',
+      },
+      {
+        title: '休闲零食',
+      },
+      {
+        title: '个人护理',
+      },
+      {
+        title: '粮油调味',
+      },
+      {
+        title: '衣物清洁',
+      },
+      {
+        title: '酒水饮料',
+      },
+      {
+        title: '休闲零食',
+      },
+      {
+        title: '个人护理',
+      },
+      {
+        title: '粮油调味',
+      },
+      {
+        title: '衣物清洁',
+      },
+      {
+        title: '酒水饮料',
+      },
+      {
+        title: '休闲零食',
+      },
+      {
+        title: '个人护理',
+      },
+      {
+        title: '粮油调味',
+      },
+      {
+        title: '衣物清洁',
+      },
+      {
+        title: '酒水饮料',
+      },
+      {
+        title: '休闲零食',
+      },
+      {
+        title: '个人护理',
+      },
+      {
+        title: '粮油调味',
+      },
+      {
+        title: '衣物清洁',
+      },
+    ],
+    categoryCurrent: 0, // 选中的分类
+  }
+
+  methods = {
+
+    setCurrent (e) {
+      this.categoryCurrent = e.currentTarget.dataset.index;
+      this.$apply();
+    }
+
+  }
+
+}
+</script>
+
+<style lang="less">
+// 边栏尺寸
+@sideSize: 200rpx;
+
+.products {
+  border-top: 1rpx rgba(0,0,0,.05) solid;
+  bottom: 96rpx;
+  position: fixed;
+  top: 240rpx;
+  width: 100%;
+
+  .sub {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .sidebar {
+    left: 0;
+    overflow: auto;
+    width: @sideSize;
+  }
+
+  .main {
+    background-color: #fff;
+    left: @sideSize;
+    right: 0;
+
+    .header {
+      height: 96rpx;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+    }
+
+    .body {
+      bottom: 0;
+      overflow: auto;
+      padding: 40rpx;
+      position: absolute;
+      left: 0;
+      top: 96rpx;
+      right: 0;
+    }
+
+  }
+
+  // 分类
+  .categories {
+    padding-bottom: 96rpx;
+    position: relative;
+
+    &:after {
+      border-right: 1rpx rgba(0,0,0,.05) solid;
+      bottom: 0;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 0;
+    }
+
+    .item {
+      border-bottom: 1rpx rgba(0,0,0,.05) solid;
+      display: flex;
+      justify-content: space-between;
+      padding: 16rpx;
+      position: relative;
+      z-index: 1;
+
+      text {
+        color: #888;
+        display: block;
+        font-size: 28rpx;
+        line-height: 64rpx;
+        padding: 0 16rpx;
+      }
+
+      &.current {
+        background-color: white;
+
+        text {
+          color: #333;
+          font-weight: bold;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+</style>
+
+
