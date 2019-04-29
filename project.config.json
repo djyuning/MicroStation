@@ -11,5 +11,7 @@
 	"appid": "wxf4ed7883e65aebff",
 	"projectname": "luck",
 	"miniprogramRoot": "dist/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {}
 }

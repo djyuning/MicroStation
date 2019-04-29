@@ -1,10 +1,11 @@
 <template>
   <view class="container">
 
+    <!-- 主轮播图 -->
     <view class="carousel-wrap">
       <swiper indicator-dots="{{ true }}"
       circular="{{ true }}">
-        <block wx:for="{{ imgUrls }}">
+        <block wx:for="{{ imgUrls }}" wx:key="{{ index }}">
           <swiper-item>
             <view class="cover">
               <image src="https://hbimg.huabanimg.com/e5e315ac060fb6d21ab15c4133bede014e8ea1084d42e-AEYxO6_fw658" background-size="cover"/>
@@ -14,34 +15,18 @@
       </swiper>
     </view>
 
+    <!-- 服务入口 -->
     <view class="entries">
-      <view class="col">
-        <navigator url="/pages/tester">
-          <image src="https://hbimg.huabanimg.com/8a04d01aa3262d53fc988ed41696c37e478ad7eb1a42b-3hQwTC_fw658" />
-          <text>快递</text>
-        </navigator>
-      </view>
-      <view class="col">
-        <navigator url="/pages/tester">
-          <image src="https://hbimg.huabanimg.com/8a04d01aa3262d53fc988ed41696c37e478ad7eb1a42b-3hQwTC_fw658" />
-          <text>洗衣</text>
-        </navigator>
-      </view>
-      <view class="col">
-        <navigator url="/pages/tester">
-          <image src="https://hbimg.huabanimg.com/8a04d01aa3262d53fc988ed41696c37e478ad7eb1a42b-3hQwTC_fw658" />
-          <text>学车</text>
-        </navigator>
-      </view>
-      <view class="col">
-        <navigator url="/pages/tester">
-          <image src="https://hbimg.huabanimg.com/8a04d01aa3262d53fc988ed41696c37e478ad7eb1a42b-3hQwTC_fw658" />
-          <text>租车</text>
+      <view class="col" wx:for="{{ entries }}" wx:key="unique">
+        <navigator url="{{ item.path }}">
+          <image src="{{ item.icon }}" lazyload="{{ true }}" />
+          <text>{{ item.title }}</text>
         </navigator>
       </view>
     </view>
 
-    <navigator class="banner" url="/pages/tester">
+    <!-- 横幅广告 :: 会员注册 -->
+    <navigator class="banner" url="/pages/member">
       <image src="https://hbimg.huabanimg.com/40eaab4cafa7909bfa90758da14e20fbdfdc3edf156e5-de0R8y_fw658" background-size="cover"/>
     </navigator>
 
@@ -51,21 +36,8 @@
 <script>
   import wepy from 'wepy';
   import { connect } from 'wepy-redux';
-  import testMixin from '../mixins/test';
 
-  @connect({
-    num (state) {
-      return state.counter.num;
-    },
-    asyncNum (state) {
-      return state.counter.asyncNum;
-    },
-    sumNum (state) {
-      return state.counter.num + state.counter.asyncNum;
-    }
-  })
-
-  export default class Index extends wepy.page {
+  export default class IndexPage extends wepy.page {
     // 配置项
     config = {
       navigationBarTitleText: '颂小二'
@@ -74,12 +46,52 @@
     // 引入的组件
     components = {}
 
-    // 混入的方法
-    mixins = [testMixin]
-
     // 数据
     data = {
-      imgUrls: [1, 2, 3, 4]
+      imgUrls: [1, 2, 3, 4], // 主轮播图
+      // 服务入口
+      entries: [
+        {
+          title: '快递',
+          path: '/pages/express',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '洗衣',
+          path: '/pages/laundry',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '学车',
+          path: '/pages/driver',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '租车',
+          path: '/pages/hertz',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '便捷购',
+          path: '/pages/retail',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '亲子',
+          path: '/pages/parenting',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '读书',
+          path: '/pages/reading',
+          icon: '/assets/server-item.png',
+        },
+        {
+          title: '二手',
+          path: '/pages/secondhand',
+          icon: '/assets/server-item.png',
+        },
+      ]
     }
 
     // 计算属性
@@ -89,25 +101,12 @@
     methods = {}
 
     onLoad() {
-      let self = this;
 
-      // 获取用户信息
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo;
-        }
-
-        self.$apply();
-      });
     }
   }
 </script>
 
 <style lang="less">
-
-.container {
-  background-color: #fafafa;
-}
 
   // 轮播图
   @carouselSize: percentage(9/16);
@@ -153,9 +152,10 @@
   .entries {
     background-color: white;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    margin: 16rpx 0;
-    padding: 8pt;
+    margin: 20rpx 0;
+    padding: 16rpx;
 
     .col {
       position: relative;
@@ -163,16 +163,17 @@
     }
 
     navigator {
+      border-radius: 16rpx;
       align-items: center;
       display: flex;
       flex: 1;
       flex-direction: column;
       justify-content: center;
-      margin: 8pt;
+      padding: 16rpx;
       overflow: hidden;
 
       image {
-        height: 90rpx;
+        height: 108rpx;
         margin: 0 auto;
         width: 108rpx;
       }
@@ -211,4 +212,3 @@
   }
 
 </style>
-Í

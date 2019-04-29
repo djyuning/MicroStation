@@ -1,7 +1,7 @@
 <template>
   <view class="container">
 
-    <text>页面跳转测试</text>
+    <text>开通会员</text>
 
   </view>
 </template>
@@ -9,9 +9,9 @@
 <script>
 import wepy from 'wepy';
 
-export default class TesterPage extends wepy.page {
+export default class MemberPage extends wepy.page {
   config = {
-    navigationBarTitleText: '页面跳转测试'
+    navigationBarTitleText: '开通会员'
   }
 }
 </script>

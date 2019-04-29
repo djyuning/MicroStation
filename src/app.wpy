@@ -2,20 +2,19 @@
 import wepy from 'wepy';
 import 'wepy-async-function';
 
-import { setStore } from 'wepy-redux';
-import configStore from './store';
-
-const store = configStore();
-setStore(store);
-
 export default class extends wepy.app {
   config = {
+    // 页面
     pages: [
-      'pages/index',
-      'pages/mall',
-      'pages/user',
+      'pages/index', // 主页
+      'pages/mall', // 超市
+      'pages/user', // 我的
+      'pages/member', // 开通会员
+      'pages/author', // 用户授权
       'pages/tester'
     ],
+
+    // 选项卡导航，参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html
     tabBar: {
       backgroundColor: 'white',
       borderStyle: 'white',
@@ -41,58 +40,36 @@ export default class extends wepy.app {
         }
       ]
     },
+
+    // 窗口配置，参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/page.html
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      backgroundColor: '#fafafa'
     }
-  }
-
-  globalData = {
-    userInfo: null
   }
 
   constructor () {
     super();
-    this.use('requestfix');
   }
 
-  onLaunch() {
-    this.testAsync();
-  }
+  onLaunch() {}
 
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved');
-      }, s * 1000);
-    });
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3);
-    console.log(data);
-  }
-
-  getUserInfo(cb) {
-    const that = this;
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo;
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo;
-        cb && cb(res.userInfo);
-      }
-    });
-  }
 }
 </script>
 
 <style lang="less">
-.container {
+@import "./vendor/weui/weui.wxss";
+
+page {
   background-color: #fafafa;
+  min-height: 100%;
+}
+
+.container {
   position: relative;
 }
+
 </style>

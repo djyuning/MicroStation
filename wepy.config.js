@@ -3,13 +3,11 @@ var prod = process.env.NODE_ENV === 'production';
 
 module.exports = {
   wpyExt: '.wpy',
-  eslint: true,
+  eslint: false, // 关闭 ESLint
   cliLogs: !prod,
-  build: {
-  },
+  build: {},
   resolve: {
     alias: {
-      counter: path.join(__dirname, 'src/components/counter'),
       '@': path.join(__dirname, 'src')
     },
     aliasFields: ['wepy', 'weapp'],
@@ -32,8 +30,7 @@ module.exports = {
       ]
     }
   },
-  plugins: {
-  },
+  plugins: {},
   appConfig: {
     noPromiseAPI: ['createSelectorQuery']
   }
@@ -41,13 +38,14 @@ module.exports = {
 
 if (prod) {
 
-  // 压缩js
   module.exports.plugins = {
+    // 压缩 js
     uglifyjs: {
       filter: /\.js$/,
-      config: {
-      }
+      config: {}
     },
+
+    // 压缩图片
     imagemin: {
       filter: /\.(jpg|png|jpeg)$/,
       config: {

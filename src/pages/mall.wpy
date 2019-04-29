@@ -9,7 +9,7 @@
 <script>
 import wepy from 'wepy';
 
-export default class Mall extends wepy.page {
+export default class MallPage extends wepy.page {
   config = {
     navigationBarTitleText: '超市'
   }

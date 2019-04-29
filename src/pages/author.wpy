@@ -1,0 +1,221 @@
+<template>
+  <view class="container">
+    <view class="main">
+
+      <view class="cover-wrap">
+        <view class="cover">
+          <image src="/assets/author-cover.png" mode="aspectFit" />
+        </view>
+      </view>
+
+      <text class="sloga">全能颂小二 就在您的身边</text>
+
+      <view class="info">
+        <text>· 仅使用微信开放的个人信息（不包含敏感信息）；</text>
+        <text>· 仅用于本地和远程个性数据存储服务；</text>
+        <text>· 小程序内随时可删除授权信息；</text>
+      </view>
+
+    </view>
+    <view class="footer">
+      <button type="primary" lang="zh_CN" open-type="getUserInfo"
+        bindgetuserinfo="onGotUserInfo">确认授权</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class AuthorPage extends wepy.page {
+  config = {
+    navigationBarTitleText: '授权访问'
+  }
+
+  data = {
+    refer: null, // 授权成功跳转回的页面
+    placeholder: null
+  }
+
+  methods = {
+    // 用户信息获取成功
+    onGotUserInfo(e) {
+      let detail = e.detail;
+
+      // 未取得授权 getUserInfo:fail auth deny
+      if (detail.errMsg.indexOf('deny') !== -1) {
+        wx.showModal({
+          title: '提示',
+          content: '当前小程序需要使用您的微信信息，请重新授权！'
+        });
+        return;
+      }
+
+      // 创建缓存数据
+      let cache = Object.assign({}, detail.userInfo, {
+        id: detail.signature, // 唯一标识
+        timestamp: new Date().getTime()
+      });
+
+      // 显示 loading
+      wx.showNavigationBarLoading();
+      wx.showLoading({
+        title: '正在跳转',
+        mask: true,
+      });
+
+      // 写入本地缓存
+      this.setCache(cache)
+        .then(this.pushData)
+        .then(() => {
+          // 隐藏 loading
+          wx.hideNavigationBarLoading();
+          wx.hideLoading();
+
+          // 跳转到来源页面
+          wx.reLaunch({
+            url: this.refer,
+          });
+
+        });
+    }
+  }
+
+  // 读取用户信息
+  initUser () {
+    wx.getStorage({
+      key: 'user',
+      success: (result) => {
+        // 如果已登录，重定向到来源页面
+        // wx.redirectTo 跳转到 **非 tabbar** 页面
+        wx.reLaunch({
+          url: this.refer,
+        });
+      },
+      fail: () => {},
+      complete: () => {}
+    });
+  }
+
+  // 发送用户基本信息到远程服务器
+  pushData(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 1000 * 2);
+    });
+  }
+
+  // 写入缓存
+  setCache(data) {
+    return new Promise((resolve, reject) => {
+      wx.setStorage({
+        key: 'user',
+        data: data,
+        success() {
+          resolve(data);
+        },
+        fail(error) {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  onLoad(options, from) {
+    // 更新来源页面信息
+    this.refer = options.refer;
+
+    // 初始化用户信息
+    this.initUser();
+  }
+}
+</script>
+
+<style lang="less">
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+// 主体内容
+.main {
+  bottom: 110rpx;
+  overflow: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+
+  // 插画封面
+  .cover {
+    box-sizing: content-box;
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    width: 100%;
+
+    // 包裹
+    &-wrap {
+      margin: 80rpx auto;
+      max-width: 480rpx;
+    }
+
+    image {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  // 口号
+  .sloga {
+    color: #666;
+    display: block;
+    font-size: 40rpx;
+    font-weight: 500;
+    margin: 0 80rpx;
+    text-align: center;
+  }
+
+  .info {
+    margin: 80rpx auto;
+    max-width: 512rpx;
+
+    text {
+      color: #999;
+      display: block;
+      font-size: 24rpx;
+      line-height: 64rpx;
+    }
+
+  }
+
+}
+
+// 页脚
+.footer {
+  background-color: white;
+  border-top: 1px #eee solid;
+  bottom: 0;
+  left: 0;
+  padding: 20rpx;
+  position: absolute;
+  right: 0;
+
+  button {
+    font-size: 32rpx;
+    line-height: 88rpx;
+  }
+
+}
+</style>

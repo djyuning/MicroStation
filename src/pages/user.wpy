@@ -1,21 +1,31 @@
 <template>
   <view class="container">
 
-    <!-- user start -->
+    <!-- 用户基本信息 -->
     <view class="user">
 
-      <view class="avatar">
-        <image src="" />
+      <!-- 用户已登录 -->
+      <view class="base" wx:if="{{ user }}">
+
+        <view class="avatar">
+          <image src="{{ avatar }}" />
+        </view>
+
+        <view class="info">
+          <text class="username">{{ username }}</text>
+          <text class="remark">{{ address }}</text>
+        </view>
+
       </view>
 
-      <view class="info">
-        <text class="username">username</text>
-        <text class="remark">username</text>
+      <!-- 用户未登录 -->
+      <view class="options" wx:if="{{ !user }}">
+        <navigator url="/pages/author?refer=/pages/user">请登录</navigator>
       </view>
 
     </view>
-    <!-- user end -->
 
+    <!-- 菜单 -->
     <view class="menu">
 
       <navigator class="item" url="/pages/tester">
@@ -55,15 +65,106 @@
 
     </view>
 
+    <!-- 菜单 -->
+    <view class="menu">
+
+      <view class="item">
+        <view class="info">
+          <text class="title" bindtap="clearCache">清除缓存</text>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="info">
+          <text class="title" bindtap="clearCache">关于颂小二</text>
+        </view>
+      </view>
+
+    </view>
+
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
 
-export default class User extends wepy.page {
+export default class UserPage extends wepy.page {
   config = {
     navigationBarTitleText: '个人中心'
+  }
+
+  // 数据
+  data = {
+    user: null, // 用户信息
+    placeholder: null
+  }
+
+  // 计算属性
+  computed = {
+    // 返回用户头像
+    avatar () {
+      if (!this.user) return '';
+      return this.user.avatarUrl;
+    },
+
+    // 返回用户昵称或用户名
+    username () {
+      if (!this.user) return '';
+      return this.user.nickName || this.user.id;
+    },
+
+    // 获取用户的所在地区
+    address () {
+      if (!this.user) return '';
+      return this.user.province + ' · ' + this.user.city;
+    }
+  }
+
+  // 清除缓存
+  clearCache () {
+    wx.showNavigationBarLoading();
+    wx.showLoading({
+      title: '正在操作',
+      mask: true,
+    });
+
+    wx.clearStorage({
+      success () {
+        setTimeout(() => {
+          // 隐藏 loading
+          wx.hideNavigationBarLoading();
+          wx.hideLoading();
+
+          // 刷新
+          wx.reLaunch({
+            url: '/pages/user',
+          });
+
+        }, 1000);
+      },
+      fail () {},
+      complete () {}
+    });
+  }
+
+  // 读取用户信息
+  initUser () {
+    wx.getStorage({
+      key: 'user',
+      success: (result) => {
+        this.user = result.data;
+      },
+      fail: () => {},
+      complete: () => {}
+    });
+  }
+
+  onLoad () {
+  }
+
+  onShow () {
+    // 初始化用户信息
+    this.initUser();
   }
 }
 </script>
@@ -73,11 +174,13 @@ export default class User extends wepy.page {
 // 信息
 .user {
   background-image: linear-gradient(to right top, #5379f4, #34e0c8);
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20rpx;
   padding: 64rpx 40rpx;
   position: relative;
+
+  .base, .options {
+    display: flex;
+    justify-content: space-between;
+  }
 
   // 头像
   .avatar {
@@ -98,10 +201,14 @@ export default class User extends wepy.page {
   .info {
     flex: 1;
     margin-left: 32rpx;
+    overflow: hidden;
     position: relative;
 
     text {
       display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .username {
@@ -120,26 +227,42 @@ export default class User extends wepy.page {
 
   }
 
+  .options {
+    justify-content: center;
+
+    navigator {
+      border-radius: 8rpx;
+      color: white;
+      font-size: 32rpx;
+      line-height: 64rpx;
+      padding: 16rpx 48rpx;
+    }
+
+  }
+
 }
 
 // 菜单
 .menu {
   background-color: #fff;
   border-top: 1px #eee solid;
+  margin: 20rpx auto;
   position: relative;
 
   .item {
+    align-items: center;
     border-bottom: 1px #eee solid;
     display: flex;
     justify-content: space-between;
-    padding: 16rpx;
     position: relative;
 
     .info {
       flex: 1;
+      padding: 16rpx;
       position: relative;
 
       .title {
+        display: block;
         font-size: 32+rpx;
         line-height: 64rpx;
         padding: 0 16rpx;
@@ -149,6 +272,9 @@ export default class User extends wepy.page {
 
     .arrow {
       height: 64rpx;
+      margin-right: 16rpx;
+      opacity: .5;
+      transform: scale(.6);
       width: 64rpx;
     }
 
