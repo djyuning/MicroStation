@@ -1,0 +1,21 @@
+<template>
+  <view class="container">
+
+    <text>快递</text>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ExpressPage extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的快递'
+  }
+}
+</script>
+
+<style lang="less">
+//
+</style>

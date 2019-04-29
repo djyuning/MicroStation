@@ -1,19 +1,23 @@
 <template>
   <view class="container">
 
-    <text>Mall</text>
+    <location></location>
 
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+import Location from '@/components/location';
 
 export default class MallPage extends wepy.page {
   config = {
     navigationBarTitleText: '超市'
   }
 
+  components = {
+    location: Location
+  }
 }
 </script>
 

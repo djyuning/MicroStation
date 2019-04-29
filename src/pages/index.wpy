@@ -70,27 +70,7 @@
           title: '租车',
           path: '/pages/hertz',
           icon: '/assets/server-item.png',
-        },
-        {
-          title: '便捷购',
-          path: '/pages/retail',
-          icon: '/assets/server-item.png',
-        },
-        {
-          title: '亲子',
-          path: '/pages/parenting',
-          icon: '/assets/server-item.png',
-        },
-        {
-          title: '读书',
-          path: '/pages/reading',
-          icon: '/assets/server-item.png',
-        },
-        {
-          title: '二手',
-          path: '/pages/secondhand',
-          icon: '/assets/server-item.png',
-        },
+        }
       ]
     }
 

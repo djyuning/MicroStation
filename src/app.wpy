@@ -6,11 +6,17 @@ export default class extends wepy.app {
   config = {
     // 页面
     pages: [
-      'pages/index', // 主页
       'pages/mall', // 超市
+
+      'pages/index', // 主页
+
       'pages/user', // 我的
       'pages/member', // 开通会员
       'pages/author', // 用户授权
+      'pages/express', // 快递
+      'pages/laundry', // 洗衣
+      'pages/driver', // 驾校
+      'pages/hertz', // 租车
       'pages/tester'
     ],
 
@@ -48,20 +54,26 @@ export default class extends wepy.app {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black',
       backgroundColor: '#fafafa'
-    }
-  }
+    },
 
-  constructor () {
+    // 授权信息，参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#permission
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于小程序位置接口的效果展示'
+      }
+    }
+  };
+
+  constructor() {
     super();
   }
 
   onLaunch() {}
-
 }
 </script>
 
 <style lang="less">
-@import "./vendor/weui/weui.wxss";
+@import './vendor/weui/weui.wxss';
 
 page {
   background-color: #fafafa;
@@ -71,5 +83,4 @@ page {
 .container {
   position: relative;
 }
-
 </style>

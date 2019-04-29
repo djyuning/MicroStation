@@ -74,12 +74,17 @@
         </view>
       </view>
 
-      <view class="item">
+      <navigator class="item" url="/pages/about">
         <view class="info">
-          <text class="title" bindtap="clearCache">关于颂小二</text>
+          <text class="title">关于颂小二</text>
         </view>
-      </view>
+        <image class="arrow" src="/assets/menu-arrow.png" />
+      </navigator>
 
+    </view>
+
+    <view class="weui-footer">
+      <text class="weui-footer__text">颂小二 版本 1.0.0</text>
     </view>
 
   </view>
@@ -130,17 +135,14 @@ export default class UserPage extends wepy.page {
 
     wx.clearStorage({
       success () {
-        setTimeout(() => {
-          // 隐藏 loading
-          wx.hideNavigationBarLoading();
-          wx.hideLoading();
+        // 隐藏 loading
+        wx.hideNavigationBarLoading();
+        wx.hideLoading();
 
-          // 刷新
-          wx.reLaunch({
-            url: '/pages/user',
-          });
-
-        }, 1000);
+        // 刷新
+        wx.reLaunch({
+          url: '/pages/user',
+        });
       },
       fail () {},
       complete () {}
@@ -231,11 +233,12 @@ export default class UserPage extends wepy.page {
     justify-content: center;
 
     navigator {
-      border-radius: 8rpx;
+      border: 1px rgba(255,255,255,.3) solid;
+      border-radius: 48rpx;
       color: white;
       font-size: 32rpx;
       line-height: 64rpx;
-      padding: 16rpx 48rpx;
+      padding: 8rpx 64rpx;
     }
 
   }
@@ -263,7 +266,7 @@ export default class UserPage extends wepy.page {
 
       .title {
         display: block;
-        font-size: 32+rpx;
+        font-size: 32rpx;
         line-height: 64rpx;
         padding: 0 16rpx;
       }
@@ -281,4 +284,10 @@ export default class UserPage extends wepy.page {
   }
 
 }
+
+// 页脚信息
+.weui-footer {
+  padding: 80rpx;
+}
+
 </style>

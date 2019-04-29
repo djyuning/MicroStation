@@ -1,17 +1,22 @@
 <template>
   <view class="container">
 
-    <text>页面跳转测试</text>
+    <complete title="It works!" titleSub="这是一个测试页面" remark="该页面包含一些测试内容"></complete>
 
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+import Complete from '@/components/complete';
 
 export default class TesterPage extends wepy.page {
   config = {
     navigationBarTitleText: '页面跳转测试'
+  }
+
+  components = {
+    complete: Complete
   }
 }
 </script>

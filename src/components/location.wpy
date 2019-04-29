@@ -1,0 +1,175 @@
+<template>
+  <view class="location">
+
+    <view class="base">
+      <text class="name">{{ name }}</text>
+      <text class="address">{{ address }}</text>
+    </view>
+
+    <view class="distance">
+      <text>{{ distance || 0 }} km</text>
+      <image class="arrow" src="/assets/menu-arrow.png" />
+    </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import QQMapWX from '@/vendor/qqmap-wx-jssdk/qqmap-wx-jssdk.min.js';
+
+// 实例
+const qqmapsdk = new QQMapWX({
+  key: 'ZFBBZ-T5IWX-ASF4J-Z5GVQ-I55DJ-NTBCL'
+});
+
+export default class LocationComponent extends wepy.component {
+  props= {
+    // 传入的纬度
+    latitude: {
+      type: Number,
+      default: null,
+    },
+
+    // 传入的经度
+    longitude: {
+      type: Number,
+      default: null,
+    },
+  }
+
+  data = {
+    latitudeUse: null, // 使用的纬度
+    longitudeUse: null, // 使用的经度
+    loaction: null, // 完整的地理位置信息，由腾讯地图返回
+    name: '',
+    address: '',
+    distance: 0
+  }
+
+  // 获取详细地理位置信息
+  getDetail (latitude, longitude) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      qqmapsdk.reverseGeocoder({
+        location: `${latitude},${longitude}`,
+        success (res) {
+          console.log(res);
+
+          // 错误
+          if (res.status !== 0) {
+            reject(res.message);
+            return;
+          }
+
+          // 正确
+          self.loaction = res.result;
+          resolve(res.result);
+        },
+        fail (err) {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  // 获取位置信息
+  getLoaction () {
+    let self = this;
+
+    wx.getLocation({
+      type: 'wgs84', // // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      altitude: 1,
+      success (res) {
+        // 保持经纬度信息
+        self.latitudeUse = res.latitude;
+        self.longitudeUse = res.longitude;
+
+        // 获取详细信息
+        self.getDetail(res.latitude, res.longitude)
+        .then((loaction) => {
+
+          self.name = loaction.address_reference.business_area.title;
+          self.address = loaction.address;
+          self.$apply();
+
+        });
+
+      },
+      fail () {},
+      complete () {}
+    });
+
+  }
+
+  onLoad () {
+    // 初始化获取位置
+    this.getLoaction();
+  }
+
+}
+</script>
+
+<style lang="less">
+.location {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  .base, .distance {
+    overflow: hidden;
+    position: relative;
+  }
+
+  // 基础信息
+  .base {
+    flex: 1;
+    padding: 16rpx;
+
+    text {
+      display: block;
+      overflow: hidden;
+      padding: 0 24rpx;
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .name {
+      font-size: 32rpx;
+      line-height: 48rpx;
+    }
+
+    .address {
+      color: #888;
+      font-size: 28rpx;
+      line-height: 44rpx;
+    }
+
+  }
+
+  // 距离信息
+  .distance {
+    align-items: center;
+    display: flex;
+    max-width: 50%;
+    padding: 0 32rpx 0 16rpx;
+
+    text {
+      color: #888;
+      font-size: 32rpx;
+      line-height: 64rpx;
+      padding: 0 16rpx;
+    }
+
+    image {
+      height: 32rpx;
+      width: 32rpx;
+    }
+
+  }
+
+}
+</style>
+
