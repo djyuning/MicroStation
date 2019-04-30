@@ -172,10 +172,12 @@ export default class UserPage extends wepy.page {
 </script>
 
 <style lang="less">
+@import '../theme.less';
 
 // 信息
 .user {
-  background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+  background-color: @colorPrimary;
+  background-image: linear-gradient(to right top, @colorPrimary, @colorSecond);
   padding: 64rpx 40rpx;
   position: relative;
 

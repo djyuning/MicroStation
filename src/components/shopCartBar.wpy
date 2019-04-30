@@ -27,6 +27,8 @@ export default class ShopCartBarComponents extends wepy.component {
 </script>
 
 <style lang="less">
+@import '../theme.less';
+
 .shop-cart-bar {
   background-color: #495058;
   justify-content: space-between;
@@ -48,8 +50,8 @@ export default class ShopCartBarComponents extends wepy.component {
     width: 100rpx;
 
     image {
-      background-color: #1ea6f0;
-      background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+      background-color: @colorPrimary;
+      background-image: linear-gradient(to right top, @colorPrimary, @colorSecond);
       border-radius: 50%;
       height: 100%;
       width: 100%;
@@ -93,8 +95,8 @@ export default class ShopCartBarComponents extends wepy.component {
   }
 
   .settlement {
-    background-color: #1ea6f0;
-    background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+    background-color: @colorPrimary;
+    background-image: linear-gradient(to right top, @colorPrimary, @colorSecond);
     color: white;
     display: block;
     font-size: 32rpx;

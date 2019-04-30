@@ -34,6 +34,8 @@ export default class SearchComponents extends wepy.component {
 </script>
 
 <style lang="less">
+@import '../theme.less';
+
 .search {
   background-color: white;
   padding: 16rpx 32rpx 32rpx;
@@ -41,7 +43,7 @@ export default class SearchComponents extends wepy.component {
 
   .inner {
     align-items: center;
-    background-color: #f2f2f2;
+    background-color: @colorSearchBar;
     border-radius: 8rpx;
     display: flex;
     padding-right: 8rpx;

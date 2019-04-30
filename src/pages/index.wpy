@@ -87,91 +87,28 @@
 </script>
 
 <style lang="less">
+@import '../theme.less';
 
-  // 轮播图
-  @carouselSize: percentage(350/658);
-  .carousel-wrap {
-    height: 0;
-    padding-bottom: @carouselSize;
-    position: relative;
+// 轮播图
+@carouselSize: percentage(350/658);
+.carousel-wrap {
+  height: 0;
+  padding-bottom: @carouselSize;
+  position: relative;
 
-    swiper {
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-    }
-
-    // 封面
-    .cover {
-      box-sizing: content-box;
-      height: 0;
-      padding-bottom: @carouselSize;
-      position: relative;
-      width: 100%;
-
-      image {
-        align-items: center;
-        display: flex;
-        height: 100%;
-        justify-content: center;
-        overflow: hidden;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-      }
-
-    }
-
+  swiper {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 
-  // 入口 
-  .entries {
-    background-color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 20rpx 0;
-    padding: 16rpx;
-
-    .col {
-      position: relative;
-      width: 25%;
-    }
-
-    navigator {
-      border-radius: 16rpx;
-      align-items: center;
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      justify-content: center;
-      padding: 16rpx;
-      overflow: hidden;
-
-      image {
-        height: 108rpx;
-        margin: 0 auto;
-        width: 108rpx;
-      }
-
-      text {
-        font-size: 28rpx;
-        margin-top: 16rpx;
-        text-align: center;
-      }
-
-    }
-
-  }
-
-  // 广告
-  .banner {
+  // 封面
+  .cover {
     box-sizing: content-box;
     height: 0;
-    padding-bottom: percentage(266/658);
+    padding-bottom: @carouselSize;
     position: relative;
     width: 100%;
 
@@ -188,5 +125,71 @@
     }
 
   }
+
+}
+
+// 入口 
+.entries {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20rpx 0;
+  padding: 16rpx;
+
+  .col {
+    position: relative;
+    width: 25%;
+  }
+
+  navigator {
+    border-radius: 16rpx;
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16rpx;
+    overflow: hidden;
+
+    image {
+      height: 108rpx;
+      margin: 0 auto;
+      width: 108rpx;
+    }
+
+    text {
+      color: @colorText;
+      display: block;
+      font-size: 28rpx;
+      margin-top: 16rpx;
+      text-align: center;
+    }
+
+  }
+
+}
+
+// 广告
+.banner {
+  box-sizing: content-box;
+  height: 0;
+  padding-bottom: percentage(266/658);
+  position: relative;
+  width: 100%;
+
+  image {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+}
 
 </style>
