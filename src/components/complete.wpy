@@ -1,5 +1,5 @@
 <template>
-  <view class="complete">
+  <view :class="{ complete: 1, mini: size === 'mini' }">
 
     <view class="cover-wrap" wx:if="{{ cover }}">
       <view class="cover">
@@ -26,6 +26,12 @@ import wepy from 'wepy';
 export default class CompleteComponent extends wepy.component {
   // 外部传值
   props = {
+
+    // 尺寸
+    size: {
+      type: String,
+      default: 'default', // default 正常尺寸 | mini 小尺寸
+    },
 
     // 封面图
     cover: {
@@ -106,7 +112,7 @@ export default class CompleteComponent extends wepy.component {
   .title {
     font-size: 40rpx;
     font-weight: 500;
-    line-height: 80rpx;
+    line-height: 64rpx;
   }
 
   .title-sub {
@@ -128,4 +134,17 @@ export default class CompleteComponent extends wepy.component {
   }
 
 }
+
+// 小尺寸
+.complete.mini {
+
+  .cover {
+    &-wrap {
+      margin: 40rpx auto;
+      max-width: 128rpx;
+    }
+  }
+
+}
+
 </style>

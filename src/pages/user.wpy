@@ -245,16 +245,19 @@ export default class UserPage extends wepy.page {
 
 }
 
+// 边框色
+@borderColor: #f9f9f9;
+
 // 菜单
 .menu {
   background-color: #fff;
-  border-top: 1px #eee solid;
+  border-top: 1px @borderColor solid;
   margin: 20rpx auto;
   position: relative;
 
   .item {
     align-items: center;
-    border-bottom: 1px #eee solid;
+    border-bottom: 1px @borderColor solid;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -265,10 +268,14 @@ export default class UserPage extends wepy.page {
       position: relative;
 
       .title {
+        color: #666;
         display: block;
-        font-size: 32rpx;
+        font-size: 28rpx;
         line-height: 64rpx;
+        overflow: hidden;
         padding: 0 16rpx;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
     }

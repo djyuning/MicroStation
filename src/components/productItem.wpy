@@ -1,0 +1,175 @@
+<template>
+  <view class="product-item" bindtap="itemTaped">
+
+    <view class="cover-wrap">
+      <view class="cover">
+        <image src="{{ productUse.cover }}" mode="aspectFill" />
+      </view>
+    </view>
+
+    <view class="info">
+
+      <text class="title">{{ productUse.title }}</text>
+
+      <view class="price-member">
+        <text class="label">会员价</text>
+        <text class="price">¥ {{ productUse.priceMember }}</text>
+      </view>
+
+      <text class="price-base">¥ {{ productUse.priceBase }}</text>
+
+      <image class="push-btn" id="push-btn" src="/assets/icon-push.png" mode="aspectFill" />
+
+    </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ProductItemComponent extends wepy.component {
+
+  props = {
+    product: {
+      type: Object,
+      default: null,
+    }
+  }
+
+  computed = {
+
+    // 格式化传入的产品信息
+    productUse () {
+      return Object.assign({}, {
+        id: -1,
+        cover: 0,
+        title: null,
+        priceBase: 9999.00,
+        priceMember: 9999.00,
+        stock: 0,
+      }, this.product);
+    },
+
+    // 详情 URL
+    detailUrl () {
+      return `/pages/productDetail?from=mall&id=${this.productUse.id}`;
+    },
+
+  }
+
+  methods = {
+
+    itemTaped (e) {
+
+      // 添加到购物车按钮
+      if (e.target.id === 'push-btn') {
+        console.log('添加到购物车');
+        return;
+      }
+
+      wx.navigateTo({
+        url: this.detailUrl,
+      });
+
+    }
+
+  }
+
+}
+</script>
+
+<style lang="less">
+.product-item {
+  align-items: stretch;
+  border-bottom: 1px #fafafa solid;
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx;
+  position: relative;
+
+  // 封面
+  .cover {
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+
+    &-wrap {
+      width: 160rpx;
+    }
+
+    image {
+      background-color: #fafafa;
+      border-radius: 6rpx;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+  }
+
+  // 基础信息
+  .info {
+    flex: 1;
+    margin: 0 20rpx;
+    overflow: hidden;
+
+    // 商品名称
+    .title {
+      display: block;
+      font-size: 28rpx;
+      line-height: 56rpx;
+      margin-bottom: 16rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    // 会员价
+    .price-member {
+      align-items: center;
+      display: flex;
+
+      text {
+        font-size: 20rpx;
+        line-height: 40rpx;
+      }
+
+      .label {
+        background-color: #f00;
+        border-radius: 32rpx;
+        color: white;
+        margin-right: 16rpx;
+        padding: 0 16rpx;
+      }
+
+    }
+
+    // 原价
+    .price-base {
+      color: #f00;
+      display: block;
+      font-size: 28rpx;
+      line-height: 48rpx;
+      margin-top: 16rpx;
+      padding: 0 16rpx;
+    }
+
+  }
+
+  // 加入购物车按钮
+  .push-btn {
+    background-color: #fc0;
+    border-radius: 50%;
+    bottom: 20rpx;
+    height: 48rpx;
+    position: absolute;
+    right: 20rpx;
+    text-align: center;
+    width: 48rpx;
+  }
+
+}
+</style>

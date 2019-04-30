@@ -17,21 +17,26 @@
 
       <view class="header">
 
-asdasd
+        <view class="category-sub">
+          <view class="item" data-index="{{ -1 }}" bindtap="categorySubChange">
+            <text :class="{ current: catehorySubCurrent === -1 }">全部</text>
+          </view>
+          <block wx:for="{{ currentCategorySubs }}" wx:key="index">
+            <view class="item" data-index="{{ index }}" bindtap="categorySubChange">
+              <text :class="{ current: catehorySubCurrent === index }">{{ item.title }}</text>
+            </view>
+          </block>
+        </view>
 
       </view>
 
       <view class="body">
 
-        <text>{{ categoryCurrent }}</text>
+        <repeat for="{{ products }}" key="index" index="index" item="item">
+          <productItem :product="item"></productItem>
+        </repeat>
 
-        <block wx:for="{{ categories }}" wx:key="index">
-          <view :class="{ item: 1, current: index === categoryCurrent }"
-          data-index="{{ index }}"
-          bindtap="setCurrent">
-            <text>{{ item.title }}</text>
-          </view>
-        </block>
+        <complete size="mini" titleSub="暂无数据"></complete>
 
       </view>
 
@@ -42,58 +47,34 @@ asdasd
 
 <script>
 import wepy from 'wepy';
+import ProductItem from '@/components/productItem';
+import Complete from '@/components/complete';
 
 export default class ProductsComponents extends wepy.component {
+
+  components = {
+   productItem: ProductItem,
+   complete: Complete,
+  }
 
   data = {
     categories: [
       {
         title: '酒水饮料',
-      },
-      {
-        title: '休闲零食',
-      },
-      {
-        title: '个人护理',
-      },
-      {
-        title: '粮油调味',
-      },
-      {
-        title: '衣物清洁',
-      },
-      {
-        title: '酒水饮料',
-      },
-      {
-        title: '休闲零食',
-      },
-      {
-        title: '个人护理',
-      },
-      {
-        title: '粮油调味',
-      },
-      {
-        title: '衣物清洁',
-      },
-      {
-        title: '酒水饮料',
-      },
-      {
-        title: '休闲零食',
-      },
-      {
-        title: '个人护理',
-      },
-      {
-        title: '粮油调味',
-      },
-      {
-        title: '衣物清洁',
-      },
-      {
-        title: '酒水饮料',
+        sub: [
+          {
+            title: '碳酸饮料',
+          },
+          {
+            title: '果汁饮料',
+          },
+          {
+            title: '奶茶',
+          },
+          {
+            title: '啤酒',
+          },
+        ],
       },
       {
         title: '休闲零食',
@@ -109,14 +90,89 @@ export default class ProductsComponents extends wepy.component {
       },
     ],
     categoryCurrent: 0, // 选中的分类
+    catehorySubCurrent: -1, // 选择的子分类
+    products: [
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/3acbfe15cc86840c3f4895e470c761513eb1a7eb20bce6-OOpfQt_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+      {
+        id: 1212,
+        title: '看不清这是一道什么样子美味',
+        cover: 'https://hbimg.huabanimg.com/ccee4c0093cc551072de35cfafa8ca124c114c7719bea9-Jydv55_fw658',
+        priceBase: 48.00,
+        priceMember: 24.00,
+        stock: 1, // 库存
+      },
+    ],
+  }
+
+  computed = {
+
+    currentCategorySubs () {
+      return this.categories[this.categoryCurrent].sub;
+    },
+
   }
 
   methods = {
 
+    // 主分类选择
     setCurrent (e) {
       this.categoryCurrent = e.currentTarget.dataset.index;
+      this.catehorySubCurrent = -1;
       this.$apply();
-    }
+    },
+
+    // 子分类选择
+    categorySubChange (e) {
+      this.catehorySubCurrent = e.currentTarget.dataset.index;
+      this.$apply();
+    },
 
   }
 
@@ -127,8 +183,11 @@ export default class ProductsComponents extends wepy.component {
 // 边栏尺寸
 @sideSize: 200rpx;
 
+// 边框色
+@borderColor: #f9f9f9;
+
 .products {
-  border-top: 1rpx rgba(0,0,0,.05) solid;
+  border-top: 1rpx @borderColor solid;
   bottom: 96rpx;
   position: fixed;
   top: 240rpx;
@@ -144,6 +203,14 @@ export default class ProductsComponents extends wepy.component {
     left: 0;
     overflow: auto;
     width: @sideSize;
+
+    // 隐藏滚动条
+    &::-webkit-scrollbar{
+      width: 0;
+      height: 0;
+      color: transparent;
+    }
+
   }
 
   .main {
@@ -153,16 +220,45 @@ export default class ProductsComponents extends wepy.component {
 
     .header {
       height: 96rpx;
-      position: absolute;
+      overflow: auto;
+      position: relative;
       left: 0;
       top: 0;
       right: 0;
+
+      // 隐藏滚动条
+      &::-webkit-scrollbar{
+        width: 0;
+        height: 0;
+        color: transparent;
+      }
+
+      &::before, &::after {
+        //content: '';
+        display: block;
+        bottom: 0;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        width: 32rpx;
+        z-index: 3;
+      }
+
+      &::before {
+        background-image: linear-gradient(to right, white, rgba(255, 255, 255, .3));
+        left: 0;
+      }
+
+      &::after {
+        background-image: linear-gradient(to right, rgba(255, 255, 255, .3), white);
+        right: 0;
+      }
+
     }
 
     .body {
       bottom: 0;
       overflow: auto;
-      padding: 40rpx;
       position: absolute;
       left: 0;
       top: 96rpx;
@@ -171,45 +267,44 @@ export default class ProductsComponents extends wepy.component {
 
   }
 
-  // 分类
-  .categories {
-    padding-bottom: 96rpx;
-    position: relative;
+}
 
-    &:after {
-      border-right: 1rpx rgba(0,0,0,.05) solid;
-      bottom: 0;
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 0;
+// 分类
+.categories {
+  padding-bottom: 96rpx;
+  position: relative;
+
+  &:after {
+    border-right: 1rpx @borderColor solid;
+    bottom: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .item {
+    border-bottom: 1rpx @borderColor solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 16rpx;
+    position: relative;
+    z-index: 1;
+
+    text {
+      color: #888;
+      display: block;
+      font-size: 28rpx;
+      line-height: 64rpx;
+      padding: 0 16rpx;
     }
 
-    .item {
-      border-bottom: 1rpx rgba(0,0,0,.05) solid;
-      display: flex;
-      justify-content: space-between;
-      padding: 16rpx;
-      position: relative;
-      z-index: 1;
+    &.current {
+      background-color: white;
 
       text {
-        color: #888;
-        display: block;
-        font-size: 28rpx;
-        line-height: 64rpx;
-        padding: 0 16rpx;
-      }
-
-      &.current {
-        background-color: white;
-
-        text {
-          color: #333;
-          font-weight: bold;
-        }
-
+        color: #333;
       }
 
     }
@@ -217,6 +312,52 @@ export default class ProductsComponents extends wepy.component {
   }
 
 }
+
+// 子分类列表
+.category-sub {
+  display: inline-flex;
+  height: 96rpx;
+  padding: 0 32rpx;
+  position: relative;
+  z-index: 1;
+
+  .item {
+    padding: 0 32rpx;
+    position: relative;
+
+    text {
+      color: #999;
+      display: block;
+      font-size: 28rpx;
+      line-height: 96rpx;
+      overflow: hidden;
+      max-width: 200rpx;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .current {
+      color: #333;
+    }
+
+    .current::after {
+      background-color: #1ea6f0;
+      background-image: linear-gradient(to right top, #5379f4, #34e0c8);
+      bottom: 10rpx;
+      border-radius: 8rpx;
+      content: '';
+      height: 10rpx;
+      left: 50%;
+      margin-left: -32rpx;
+      overflow: hidden;
+      position: absolute;
+      width: 64rpx;
+    }
+
+  }
+
+}
+
 </style>
 
 

@@ -6,10 +6,8 @@ export default class extends wepy.app {
   config = {
     // 页面
     pages: [
-      'pages/mall', // 超市
-
       'pages/index', // 主页
-
+      'pages/mall', // 超市
       'pages/user', // 我的
       'pages/member', // 开通会员
       'pages/author', // 用户授权
@@ -17,6 +15,7 @@ export default class extends wepy.app {
       'pages/laundry', // 洗衣
       'pages/driver', // 驾校
       'pages/hertz', // 租车
+      'pages/productDetail', // 商品详情
       'pages/tester'
     ],
 
